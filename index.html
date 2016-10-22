@@ -8,7 +8,7 @@
 
   <!-- Compiled and minified JavaScript -->
   <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
-    <title>Geolocation</title>
+    <title>Pnp Go</title>
       
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
@@ -222,7 +222,7 @@
                   })
                   
                   $("#show-trip").click(function(){
-                      alert("click") ;
+//                      alert("click") ;
                       $("#trip").openModal() ;
                   })
                   
@@ -266,7 +266,7 @@
                               var html = "" ;
                               for(var i = 2 ; i < data.length ; i++)
                                   {
-                                      var temp = "<h5>Trip Number</h5> : " + i - 1 +"<br><h5>Current Location</h5> : " + data[i][0]["current"] + "<br><h5>Starting Point</h5> : " + data[i][0]["source"] + "<br><h5>Destination</h5> : " + data[i][0]["destination"] + "<br><h5>taxi type</h5> : " + data[i][0]["taxi"] + "<br><h5>Time</h5> : " + data[i][0]["time"] ; 
+                                      var temp = "<h5>Trip Number</h5> : " + (i - 1) +"<br><h5>Current Location</h5> : " + data[i][0]["current"] + "<br><h5>Starting Point</h5> : " + data[i][0]["source"] + "<br><h5>Destination</h5> : " + data[i][0]["destination"] + "<br><h5>taxi type</h5> : " + data[i][0]["taxi"] + "<br><h5>Time</h5> : " + data[i][0]["time"] ; 
                                       
                                       html = html + temp ;
                                   }
@@ -479,7 +479,7 @@
               <img src="images/mini.png" height="90px" width="100px" class="img-responsive circle" id="share">
           </div>
           <div class="col s4 l2 center bgim">
-              <h6 class="header">Any</h6>
+              <h6 class="header">SUV</h6>
               <img src="images/sedan.png" height="95px" width="108px" class="img-responsive circle" id="any">
           </div>
           <div class="col s4 l2 center bgim">
