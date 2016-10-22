@@ -46,6 +46,11 @@
             top: 20% ;
             left: 40% ;
         }
+        #show-trip{
+            position: absolute ;
+            top : 10% ;
+            left: 85% ;
+        }
     </style>
       
           <script>
@@ -54,6 +59,7 @@
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
               $("#dest").hide() ;
+              
               var current = "" ;
                   var source = "" ;
                   var dest = "" ;
@@ -215,7 +221,10 @@
                       $("#dest").show("slow") ;
                   })
                   
-                  
+                  $("#show-trip").click(function(){
+                      alert("click") ;
+                      $("#trip").openModal() ;
+                  })
                   
                   
                   $("#dest-src").click(function(){
@@ -254,6 +263,17 @@
                               var base = [{taxi : taxi , source : source , destination : dest , current : current , time : time}] ;
                               data.push(base) ;
                               console.log(data) ;
+                              var html = "" ;
+                              for(var i = 2 ; i < data.length ; i++)
+                                  {
+                                      var temp = "<h5>Trip Number</h5> : " + i - 1 +"<br><h5>Current Location</h5> : " + data[i][0]["current"] + "<br><h5>Starting Point</h5> : " + data[i][0]["source"] + "<br><h5>Destination</h5> : " + data[i][0]["destination"] + "<br><h5>taxi type</h5> : " + data[i][0]["taxi"] + "<br><h5>Time</h5> : " + data[i][0]["time"] ; 
+                                      
+                                      html = html + temp ;
+                                  }
+                              $("#cont").html(html) ;
+//                              alert("bookin")
+//                              $("#trip").openModal() ;
+                              $("#confirm").openModal() ;
                       }
                       })
                       
@@ -518,6 +538,28 @@
               <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" id="later-ok">Ok</a>
             </div>
         </div>
+        
+        <div id="trip" class="modal">
+            <div class="modal-content">
+              <h4 class="header center">Your Trips</h4>
+              <p id="cont"></p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" id="later-ok">Ok</a>
+            </div>
+        </div>
+        
+        <div id="confirm" class="modal">
+            <div class="modal-content">
+              <h4 class="header center">Booking Confirmed</h4>
+              <p id="cont"></p>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat">Ok</a>
+            </div>
+        </div>
+        
+        <a id="show-trip" class="btn">Trips</a>
         
       </div>
       
