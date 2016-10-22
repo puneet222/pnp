@@ -3,6 +3,7 @@
   <head>
        <!-- Compiled and minified CSS -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+      <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
 
   <!-- Compiled and minified JavaScript -->
@@ -36,6 +37,10 @@
 /*            background-color: aliceblue ;*/
 /*            opacity: 50% ;*/
         }
+        .bgim{
+/*            background-color: pink ;*/
+            border-radius: 200px ;
+        }
     </style>
       
           <script>
@@ -44,6 +49,137 @@
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
               $("document").ready(function(){
+                  
+                  $("#mini").hover(function(){
+                      $("#mini").css("background-color" , "yellow") ;
+                  },function(){
+                        if(taxi != "mini")
+                            {
+                                 $("#mini").css("background-color" , "white") ;
+                            }
+                  })
+                  
+                  $("#micro").hover(function(){
+                      $("#micro").css("background-color" , "yellow") ;
+                  },function(){
+                       if(taxi != "micro")
+                           {
+                               $("#micro").css("background-color" , "white") ;
+                           }
+                  })
+                  
+                  $("#sedan").hover(function(){
+                      $("#sedan").css("background-color" , "yellow") ;
+                  },function(){
+                       if(taxi != "sedan")
+                           {
+                               $("#sedan").css("background-color" , "white") ;
+                           }
+                  })
+                  
+                  $("#share").hover(function(){
+                      $("#share").css("background-color" , "yellow") ;
+                  },function(){
+                       if(taxi != "share")
+                           {
+                               $("#share").css("background-color" , "white") ;
+                           }
+                  })
+                  
+                  $("#any").hover(function(){
+                        $("#any").css("background-color" , "yellow") ;
+                  },function(){
+                       if(taxi != "any")
+                           {
+                               $("#any").css("background-color" , "white") ;
+                           }
+                  })
+                  
+                  $("#sport").hover(function(){
+                      $("#sport").css("background-color" , "yellow") ;
+                  },function(){
+                       if(taxi != "sport")
+                           {
+                               $("#sport").css("background-color" , "white") ;
+                           }
+                  })
+                  
+                var taxi = "";
+                  
+                  $("#mini").click(function(){
+                      taxi = "mini" ;
+//                      alert("click") ;
+                       $("#mini").css("background-color" , "yellow") ;
+                       $("#sport").css("background-color" , "white") ;
+                      $("#any").css("background-color" , "white") ;
+                      $("#share").css("background-color" , "white") ;
+                      $("#sedan").css("background-color" , "white") ;
+                      $("#micro").css("background-color" , "white") ;
+                      $("#mini").css("background-color" , "yellow") ;
+                  })
+                  
+                  $("#micro").click(function(){
+                      taxi = "micro" ;
+//                      alert("click") ;
+                       $("#micro").css("background-color" , "yellow") ;
+                       $("#sport").css("background-color" , "white") ;
+                      $("#any").css("background-color" , "white") ;
+                      $("#share").css("background-color" , "white") ;
+                      $("#sedan").css("background-color" , "white") ;
+                      $("#mini").css("background-color" , "white") ;
+                      $("#micro").css("background-color" , "yellow") ;
+                  })
+                  
+                  $("#sedan").click(function(){
+                      taxi = "sedan" ;
+//                      alert("click") ;
+                       $("#sedan").css("background-color" , "yellow") ;
+                       $("#sport").css("background-color" , "white") ;
+                      $("#any").css("background-color" , "white") ;
+                      $("#share").css("background-color" , "white") ;
+                      $("#mini").css("background-color" , "white") ;
+                      $("#micro").css("background-color" , "white") ;
+                      $("#sedan").css("background-color" , "yellow") ;
+                  })
+                  
+                  $("#share").click(function(){
+                      taxi = "share" ;
+//                      alert("click") ;
+                       $("#share").css("background-color" , "yellow") ;
+                       $("#sport").css("background-color" , "white") ;
+                      $("#any").css("background-color" , "white") ;
+                      $("#mini").css("background-color" , "white") ;
+                      $("#sedan").css("background-color" , "white") ;
+                      $("#micro").css("background-color" , "white") ;
+                      $("#share").css("background-color" , "yellow") ;
+                  })
+                  
+                  $("#any").click(function(){
+                      taxi = "any" ;
+//                      alert("click") ;
+                       $("#any").css("background-color" , "yellow") ;
+                       $("#sport").css("background-color" , "white") ;
+                      $("#mini").css("background-color" , "white") ;
+                      $("#share").css("background-color" , "white") ;
+                      $("#sedan").css("background-color" , "white") ;
+                      $("#micro").css("background-color" , "white") ;
+                      $("#any").css("background-color" , "yellow") ;
+                  })
+                  
+                  $("#sport").click(function(){
+                      taxi = "sport" ;
+//                      alert("click") ;
+                       $("#sport").css("background-color" , "yellow") ;
+                       $("#mini").css("background-color" , "white") ;
+                      $("#any").css("background-color" , "white") ;
+                      $("#share").css("background-color" , "white") ;
+                      $("#sedan").css("background-color" , "white") ;
+                      $("#micro").css("background-color" , "white") ;
+                      $("#sport").css("background-color" , "yellow") ;
+                  })
+                  
+                  
+                  
                   $("#getloc").click(function(){
                   var loc = $("#location").val() ;
                   console.log(loc) ;
@@ -86,7 +222,7 @@
                     var ret = result["results"][0]["formatted_address"] ;
                     console.log(ret) ;
                     infoWindow.setContent(ret) ;
-                    
+//                    $("#location").val(ret) ;
 //                    return ret ;
             }
             })
@@ -108,12 +244,15 @@
           }) ;
           
           google.maps.event.addListener(map, 'click', function (e) {
-                alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
               var position = {
                   lat : e.latLng.lat() ,
                   lng : e.latLng.lng()
               } ;
               marker.setPosition(position) ;
+              infoWindow.open(map , marker) ;
+              infoWindow.setPosition(position) ;
+              map.setCenter(position) ;
+              getName(position.lat , position.lng , infoWindow) ;
             });
           
         infoWindow = new google.maps.InfoWindow({map: map});
@@ -178,18 +317,64 @@
     </div>
   </nav>
       
-    <div id="map"></div>
+    <div class="container">
+        <div id="map"></div>
       
       <div id="search">
           <div class="row">
               <div class="input-field col s8">
           <input id="location" type="text" class="validate">
-          <label for="location">Enter Location</label>
+<!--          <label for="location">Enter Location</label>-->
         </div>
               <div class="col s4">
-                  <a class="btn-floating btn-large waves-effect waves-light red" id="getloc"><i class="material-icons">add</i></a>
+                  <a class="btn-floating btn-large waves-effect waves-light red" id="getloc"><i class="material-icons">search</i></a>
               </div>
           </div>
       </div>
+        
+        <br>
+      
+      <div class="row">
+          <div class="col s4 l2 center bgim">
+              <h6 class="header">Mini</h6>
+              <a><img src="images/mini.png" height="90px" width="100px" class="img-responsive circle" id="mini"></a>
+          </div>
+          <div class="col s4 l2 center bgim">
+              <h6 class="header">Micro</h6>
+              <img src="images/sedan.png" height="95px" width="108px" class="img-responsive circle" id="micro">
+          </div>
+          <div class="col s4 l2 center bgim">
+              <h6 class="header">Sedan</h6>
+              <img src="images/sport.png" height="95px" width="108px" class="img-responsive circle" id="sedan">
+          </div>
+          <div class="col s4 l2 center bgim">
+              <h6 class="header">Share</h6>
+              <img src="images/mini.png" height="90px" width="100px" class="img-responsive circle" id="share">
+          </div>
+          <div class="col s4 l2 center bgim">
+              <h6 class="header">Any</h6>
+              <img src="images/sedan.png" height="95px" width="108px" class="img-responsive circle" id="any">
+          </div>
+          <div class="col s4 l2 center bgim">
+              <h6 class="header">Sport</h6>
+              <img src="images/sport.png" height="95px" width="108px" class="img-responsive circle" id="sport">
+          </div>
+        </div>
+        
+        <div class="row">
+            <div class="col s6 m6 l6 center">
+                <a class="btn yellow-text center black" style="width:100%" id="rnow">Ride Now</a> 
+            </div>
+            <div class="col s6 m6 l6 center">
+                <a class="btn yellow-text center black" style="width:100%" id="rlater">Ride Later</a> 
+            </div>
+        </div>
+        
+        <div class="row">
+            <div class="col s6 m6 l6">
+            </div>
+        </div>
+      </div>
+      
   </body>
 </html>
