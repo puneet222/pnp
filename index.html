@@ -41,6 +41,11 @@
 /*            background-color: pink ;*/
             border-radius: 200px ;
         }
+        #dest{
+            position: absolute;
+            top: 20% ;
+            left: 40% ;
+        }
     </style>
       
           <script>
@@ -48,7 +53,16 @@
       // prompted by your browser. If you see the error "The Geolocation service
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
+              $("#dest").hide() ;
+              var current = "" ;
+                  var source = "" ;
+                  var dest = "" ;
+                  var time = "" ;
               $("document").ready(function(){
+                   $("#dest").hide() ;
+                  
+                  var data = [{name : "puneet" , dest: "abc" , src: "xyz" , time:"wv"}, {name : "punet" , dast : "csjakf"}] ;
+                  console.log(data) ;
                   
                   $("#mini").hover(function(){
                       $("#mini").css("background-color" , "yellow") ;
@@ -178,6 +192,72 @@
                       $("#sport").css("background-color" , "yellow") ;
                   })
                   
+                  $("#rnow").click(function(){
+                      if(taxi == "")
+                          alert("Please Select the cab") ;
+                      else{
+                          $("#now").openModal() ;
+                          source = infoWindow.getContent() ;
+                      }
+                  })
+                  
+                  $("#rlater").click(function(){
+                      if(taxi == "")
+                          alert("Please Select the cab") ;
+                      else{
+                          
+                      }
+                  })
+                  
+                  $("#now-ok").click(function(){
+                      alert("click") ;
+                      $("#dest").show("slow") ;
+                  })
+                  
+                  
+                  
+                  
+                  $("#dest-src").click(function(){
+                      
+                      var loc = $("#loc-dest").val() ;
+                      var arr = loc.split("") ;
+                      for(var i = 0 ; i < arr.length ; i++)
+                          {
+                              if(arr[i] == " ")
+                                  arr[i] = "+" ;
+                          }
+                      loc = arr.join("") ;
+                      console.log(loc) ;
+                      
+                     var urlt = "https://maps.googleapis.com/maps/api/geocode/json?address=" + loc + "&key=AIzaSyDjvqx7eeng9qjpeIMGg4KJLaursWqEVCY" ;
+                      $.ajax({
+                          url : urlt ,
+                          success : function(result){
+                              $("#dest").hide("slow") ;
+                          console.log(result) ;
+                              var lat = result["results"][0]["geometry"]["location"]["lat"] ;
+                              var log = result["results"][0]["geometry"]["location"]["lng"] ;
+                              console.log(lat) ;
+                              var pos = {
+                                  lat: lat,
+                                  lng: log
+                                };
+                              infoWindow.setPosition(pos);
+                              marker.setPosition(pos) ;
+                              getName(lat,log , infoWindow) ;
+                              map.setCenter(pos);
+                              dest = $("#loc-dest").val() ;
+                              time = new Date() ;
+                              console.log(time) ;
+                              console.log("source = " + source + " dest = " + dest + "  currebt = " + current + " time = " + time) ;
+                              var base = [{taxi : taxi , source : source , destination : dest , current : current , time : time}] ;
+                              data.push(base) ;
+                              console.log(data) ;
+                      }
+                      })
+                      
+                  })
+                  
                   
                   
                   $("#getloc").click(function(){
@@ -212,6 +292,8 @@
                       })
               }) ;
               })
+              
+              var c = 0 ;
         function getName(lat,log, infoWindow)
         {
             var urlt = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + log + "&key=AIzaSyDjvqx7eeng9qjpeIMGg4KJLaursWqEVCY" ; 
@@ -219,15 +301,22 @@
                 url : urlt ,
                 success : function(result){
                 console.log(result) ;
+
                     var ret = result["results"][0]["formatted_address"] ;
+                     if(current == "")
+                        {
+                            current = ret ;
+                        }
                     console.log(ret) ;
                     infoWindow.setContent(ret) ;
+                     $("#loc-dest").val(ret) ;
 //                    $("#location").val(ret) ;
 //                    return ret ;
             }
             })
         }
-
+              
+             
        var map ;
        var infoWindow ;
        var marker ;
@@ -251,7 +340,7 @@
               marker.setPosition(position) ;
               infoWindow.open(map , marker) ;
               infoWindow.setPosition(position) ;
-              map.setCenter(position) ;
+//              map.setCenter(position) ;
               getName(position.lat , position.lng , infoWindow) ;
             });
           
@@ -291,6 +380,8 @@
                               'Error: The Geolocation service failed.' :
                               'Error: Your browser doesn\'t support geolocation.');
       }
+              
+             
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjvqx7eeng9qjpeIMGg4KJLaursWqEVCY&callback=initMap">
@@ -298,39 +389,54 @@
       
   </head>
   <body>
+<!--
        <nav>
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Logo</a>
-      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a href="mobile.html">Mobile</a></li>
-      </ul>
-      <ul class="side-nav" id="mobile-demo">
-        <li><a href="sass.html">Sass</a></li>
-        <li><a href="badges.html">Components</a></li>
-        <li><a href="collapsible.html">Javascript</a></li>
-        <li><a href="mobile.html">Mobile</a></li>
-      </ul>
+      <form>
+        <div class="input-field">
+          <input id="search" type="search" required>
+          <label for="search"><i class="material-icons">search</i></label>
+          <i class="material-icons">close</i>
+        </div>
+      </form>
     </div>
   </nav>
+-->
       
     <div class="container">
+        <br>
+          <div id="searh">
+          <div class="row">
+<!--
+              <div class="col s3">
+                  <a class="btn"><h6 class="header">Enter Location</h5></a>
+              </div>
+-->
+              <div class="input-field col s10">
+          <input id="location" type="text" class="validate">
+          <label for="location">Enter Location</label>
+        </div>
+              <div class="col s2">
+                  <a class="btn-floating btn-large waves-effect waves-light red" id="getloc"><i class="material-icons">search</i></a>
+              </div>
+          </div>
+      </div>
+        
         <div id="map"></div>
       
+<!--
       <div id="search">
           <div class="row">
               <div class="input-field col s8">
           <input id="location" type="text" class="validate">
-<!--          <label for="location">Enter Location</label>-->
+          <label for="location">Enter Location</label>
         </div>
               <div class="col s4">
                   <a class="btn-floating btn-large waves-effect waves-light red" id="getloc"><i class="material-icons">search</i></a>
               </div>
           </div>
       </div>
+-->
         
         <br>
       
@@ -374,6 +480,44 @@
             <div class="col s6 m6 l6">
             </div>
         </div>
+        
+        <div id="dest">
+            <div class="row">
+              <div class="input-field col s8">
+          <input id="loc-dest" type="text" class="validate" style="background-color : white ; border-radius : 10px ; width: 25em">
+<!--          <label for="loc-dest">Enter Destination</label>-->
+        </div>
+              <div class="col s4">
+                  <a class="btn-floating btn-large waves-effect waves-light red" id="dest-src">Go</a>
+              </div>
+          </div>
+        </div>
+        
+        <!--    -----------------------   RIDE NOW MODAL  ----------------------------------- -->
+        <div id="now" class="modal">
+            <div class="modal-content">
+              <h4 class="header center">Your Ride Has been booked</h4>
+              <h6 class="header center">Click Ok to choose destination.</h6>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class="modal-action modal-close waves-effect waves-green btn-flat" id="now-ok">Ok</a>
+               
+            </div>
+        </div>
+        
+        
+        
+        
+         <div id="later" class="modal">
+            <div class="modal-content">
+              <h4 class="header center">Your Ride Has been booked</h4>
+              <h6 class="header center">Click Ok to choose destination.</h6>
+            </div>
+            <div class="modal-footer">
+              <a href="#!" class=" modal-action modal-close waves-effect waves-green btn-flat" id="later-ok">Ok</a>
+            </div>
+        </div>
+        
       </div>
       
   </body>
