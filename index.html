@@ -1,15 +1,23 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Geolocation</title>
+       <!-- Compiled and minified CSS -->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/css/materialize.min.css">
+
+  <!-- Compiled and minified JavaScript -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/0.97.7/js/materialize.min.js"></script>
+    <title>Geolocation</title>
+      
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
     <meta charset="utf-8">
     <style>
       /* Always set the map height explicitly to define the size of the div
        * element that contains the map. */
       #map {
-        height: 100%;
+        position: relative;
+        height: 25em ;
+          
       }
       /* Optional: Makes the sample page fill the window. */
       html, body {
@@ -17,15 +25,56 @@
         margin: 0;
         padding: 0;
       }
+        #search{
+            position: absolute;
+            top :8em ;
+            left: 30em ;
+/*            height: 2em ;*/
+/*            width: 20em ;*/
+        }
+        #location{
+/*            background-color: aliceblue ;*/
+/*            opacity: 50% ;*/
+        }
     </style>
-  </head>
-  <body>
-    <div id="map"></div>
-    <script>
+      
+          <script>
       // Note: This example requires that you consent to location sharing when
       // prompted by your browser. If you see the error "The Geolocation service
       // failed.", it means you probably did not give permission for the browser to
       // locate you.
+              $("document").ready(function(){
+                  $("#getloc").click(function(){
+                  var loc = $("#location").val() ;
+                  console.log(loc) ;
+                      var arr = loc.split("") ;
+                      for(var i = 0 ; i < arr.length ; i++)
+                          {
+                              if(arr[i] == " ")
+                                  arr[i] = "+" ;
+                          }
+                      loc = arr.join("") ;
+                      console.log(loc) ;
+                      var urlt = "https://maps.googleapis.com/maps/api/geocode/json?address=" + loc + "&key=AIzaSyDjvqx7eeng9qjpeIMGg4KJLaursWqEVCY" ;
+                      $.ajax({
+                          url : urlt ,
+                          success : function(result){
+                          console.log(result) ;
+                              var lat = result["results"][0]["geometry"]["location"]["lat"] ;
+                              var log = result["results"][0]["geometry"]["location"]["lng"] ;
+                              console.log(lat) ;
+                              var pos = {
+                                  lat: lat,
+                                  lng: log
+                                };
+                              infoWindow.setPosition(pos);
+                              getName(lat,log , infoWindow) ;
+                              map.setCenter(pos);
+                              
+                      }
+                      })
+              }) ;
+              })
         function getName(lat,log, infoWindow)
         {
             var urlt = "https://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + "," + log + "&key=AIzaSyDjvqx7eeng9qjpeIMGg4KJLaursWqEVCY" ; 
@@ -36,17 +85,26 @@
                     var ret = result["results"][0]["formatted_address"] ;
                     console.log(ret) ;
                     infoWindow.setContent(ret) ;
+                    
 //                    return ret ;
             }
             })
         }
 
+       var map ;
+       var infoWindow ;
+
       function initMap() {
-        var map = new google.maps.Map(document.getElementById('map'), {
+        map = new google.maps.Map(document.getElementById('map'), {
           center: {lat: -34.397, lng: 150.644},
           zoom: 15
         });
-        var infoWindow = new google.maps.InfoWindow({map: map});
+          
+          google.maps.event.addListener(map, 'click', function (e) {
+                alert("Latitude: " + e.latLng.lat() + "\r\nLongitude: " + e.latLng.lng());
+            });
+          
+        infoWindow = new google.maps.InfoWindow({map: map});
 
         // Try HTML5 geolocation.
         if (navigator.geolocation) {
@@ -85,5 +143,40 @@
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDjvqx7eeng9qjpeIMGg4KJLaursWqEVCY&callback=initMap">
     </script>
+      
+  </head>
+  <body>
+       <nav>
+    <div class="nav-wrapper">
+      <a href="#!" class="brand-logo">Logo</a>
+      <a href="#" data-activates="mobile-demo" class="button-collapse"><i class="material-icons">menu</i></a>
+      <ul class="right hide-on-med-and-down">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">Javascript</a></li>
+        <li><a href="mobile.html">Mobile</a></li>
+      </ul>
+      <ul class="side-nav" id="mobile-demo">
+        <li><a href="sass.html">Sass</a></li>
+        <li><a href="badges.html">Components</a></li>
+        <li><a href="collapsible.html">Javascript</a></li>
+        <li><a href="mobile.html">Mobile</a></li>
+      </ul>
+    </div>
+  </nav>
+      
+    <div id="map"></div>
+      
+      <div id="search">
+          <div class="row">
+              <div class="input-field col s8">
+          <input id="location" type="text" class="validate">
+          <label for="location">Enter Location</label>
+        </div>
+              <div class="col s4">
+                  <a class="btn-floating btn-large waves-effect waves-light red" id="getloc"><i class="material-icons">add</i></a>
+              </div>
+          </div>
+      </div>
   </body>
 </html>
